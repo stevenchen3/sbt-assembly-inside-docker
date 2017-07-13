@@ -9,8 +9,6 @@ import io.circe.generic.semiauto._
 import io.circe.parser._
 import io.circe.syntax._
 
-import java.time.Instant
-
 sealed trait Foo
 case class Bar(xs: List[String]) extends Foo
 case class Qux(i: Int, d: Option[Double]) extends Foo
