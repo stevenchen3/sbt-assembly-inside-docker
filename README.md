@@ -8,7 +8,7 @@ The background here is that, recently, I need to shade a library named `shapeles
 that my code can work in Spark. However, I ran into the issue described above.
 
 Interestingly, when run `sbt assembly` on Linux or Mac OS bare meta machine, it works just fine.
-I have tested on the following bare meta envoriments:
+I have tested on the following bare meta environments:
 
 + Mac OS macOS Sierra
 + CentOS 7
@@ -27,9 +27,20 @@ This issue can be easily reproduced by following steps below.
 
 # Reproduce steps
 
-* set a Docker container with `sbt` and `jdk8` installed
-* `git clone` this repository to Docker container running Linux
-* change directory to `sbt-assembly-shading` and run `sbt assembly`
+* Install Docker on your machine
+* Build the Docker image
+
+```shell
+$ docker build -t sbt-assembly-centos7 .
+```
+
+* Launch a Docker container and login the container to run `sbt assembly`
+
+```shell
+$ docker run -ti sbt-assembly-centos7:latest bash
+$ cd /test
+$ sbt assembly
+```
 
 ## Error message
 
