@@ -50,3 +50,11 @@ Fully-qualified classname does not match jar entry:
   class name: shapeless/$tilde$qmark$greater$?.class
 Omitting shapeless/$tilde$qmark$greater$?.class.
 ```
+
+# How to fix this?
+
+This is due to the `NAME_MAX` difference between bare metal and Docker container, and can be fixed by adding the following to `build.sbt`
+
+```shell
+scalacOptions ++= Seq("-Xmax-classfile-name","255")
+```
