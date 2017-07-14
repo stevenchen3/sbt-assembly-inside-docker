@@ -51,3 +51,8 @@ There won't be a handy fix for this for now. (1) Assemble your Jars on bare meta
 you really need to assemble your Jars inside containers, check out workarounds from
 [https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker](https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker)
 
+# Updates
+
+* Done several experiments and testing, found out that afaik, this is actually not caused by `filename too long` as inside Docker container we can observe output `255` with `getconf NAME_MAX /` and can touch files with name up to 255 characters.
+
+* Suspect there's some issue with `sbt-assembly` shading not working properly inside container.
