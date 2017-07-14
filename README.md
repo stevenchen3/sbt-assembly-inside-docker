@@ -6,8 +6,16 @@ is that running `sbt assembly` inside Linux Docker container to package a Jar wo
 
 The background here is that, recently, I need to shade a library named `shapeless` in my project so
 that my code can work in Spark. However, I ran into the issue described above. After googling
-around, it turns out that this is a known issue, see
-[here](https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker)
+around, it turns out that this is a known issue:
+
+> This is not a problem for normal use of Scala dependencies which are binaries. However this is a
+problem if you assemble your application JAR inside Docker using SBT Assembly. SBT Assembly explodes
+all dependency jars, so the classes become local files and rolls them into one application super
+jar.
+
+
+See [here](https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker)
+for more details.
 
 This issue can be easily reproduced by following steps below.
 
