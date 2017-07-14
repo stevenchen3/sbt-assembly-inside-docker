@@ -1,4 +1,4 @@
-# Reproduce `sbt assembly` inside Docker container
+# Reproducing `sbt assembly` inside Docker container
 
 Reproduce the issue when run `sbt assembly` inside Docker container. Briefly, the issue
 is that running `sbt assembly` inside Linux Docker container to package a Jar would encounter
@@ -19,7 +19,7 @@ for more details.
 
 This issue can be easily reproduced by following steps below.
 
-# Reproduce steps
+# Reproducing steps
 
 * Install Docker on your machine
 * Build the Docker image
@@ -45,10 +45,9 @@ Fully-qualified classname does not match jar entry:
 Omitting shapeless/$tilde$qmark$greater$?.class.
 ```
 
-# How to fix this?
+# How to fix?
 
-This is due to the `NAME_MAX` difference between bare metal and Docker container, and there won't
-be a handy fix for this. If you really need to assemble your Jars inside containers, check out
-workarounds from
+There won't be a handy fix for this for now. (1) Assemble your Jars on bare metal machine; (2) If
+you really need to assemble your Jars inside containers, check out workarounds from
 [https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker](https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker)
 
