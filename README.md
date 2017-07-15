@@ -1,11 +1,11 @@
 # Reproducing `sbt assembly` inside Docker container
 
-Reproduce the issue when run `sbt assembly` inside Docker container. Briefly, the issue
-is that running `sbt assembly` inside Linux Docker container to package a Jar would encounter
-`Fully-qualified classname does not match jar entry`.
+Reproduce the issue when run `sbt assembly` with shading enbale against `shapeless` inside Docker container. Briefly, the issue
+is that running `sbt assembly` inside Docker container to package a Jar would encounter
+`Fully-qualified classname does not match jar entry` error, resulting in a broken Jar.
 
 The background here is that, recently, I need to shade a library named `shapeless` in my project so
-that my code can work in Spark. However, I ran into the issue described above. After googling
+that my code can work in Spark uses a lower version `shapeless`. However, I ran into the issue described above. After googling
 around, it turns out that this is a known issue:
 
 > This is not a problem for normal use of Scala dependencies which are binaries. However this is a
@@ -32,11 +32,13 @@ $ docker build -t sbt-assembly-centos7 .
 
 ```shell
 $ docker run -ti sbt-assembly-centos7:latest bash
+
+# do the following two steps inside the container
 $ cd /test
 $ sbt assembly
 ```
 
-## Error message
+You'll see below error message:
 
 ```shell
 Fully-qualified classname does not match jar entry:
@@ -44,6 +46,8 @@ Fully-qualified classname does not match jar entry:
   class name: shapeless/$tilde$qmark$greater$?.class
 Omitting shapeless/$tilde$qmark$greater$?.class.
 ```
+
+Do `jar -tf shapeless_2.11.2.3.2.jar` against original `shapeless`, can't find any like `shapeless/$tilde$qmark$greater`
 
 # How to fix?
 
@@ -55,4 +59,4 @@ you really need to assemble your Jars inside containers, check out workarounds f
 
 * Done several experiments and testing, found out that afaik, this is actually not caused by `filename too long` as inside Docker container we can observe output `255` with `getconf NAME_MAX /` and can touch files with name up to 255 characters.
 
-* Suspect there's some issue with `sbt-assembly` shading that causes it not working properly inside container.
+* Suspect there's some issue with `sbt-assembly` shading that causes it not working properly inside Docker container. But interestingly, it works on LXC container (e.g., CircleCI)
