@@ -47,10 +47,6 @@ Fully-qualified classname does not match jar entry:
 Omitting shapeless/$tilde$qmark$greater$?.class.
 ```
 
-Do `jar -tf shapeless_2.11.2.3.2.jar` against original `shapeless`, can't find any like
-`shapeless/$tilde$qmark$greater`. Look into the source codes of `jarjar` (a library that
-`sbt-assembly` relies on to repackage Jars), it turns out the error message thrown by `jarjar`.
-
 # How to fix?
 
 ## File name too long issue
@@ -75,12 +71,10 @@ export LANG="en_US.UTF-8"
 and can touch files with name up to 255 characters.
 
 * Suspect there's some issue with `sbt-assembly` shading that causes it not working properly inside
-Docker container. But interestingly, it works on LXC container (e.g., CircleCI).
+Docker container. But interestingly, it works on LXC container (e.g., CircleCI, the Unicode support,
+do `locale`, you will see the difference).
 
-* It turns out the `Fully-qualified classname does not match jar entry` error is caused by the
-default configuration is Docker not supporting `unicode`. Do the following will fix this issue:
-
-```shell
-export LC_ALL="en_US.UTF-8"
-export LANG="en_US.UTF-8"
+* It turns out that the `Fully-qualified classname does not match jar entry` error is caused by the
+default image configuration (e.g., CentOS) in Docker not supporting `unicode`. In `shapeless`,
+there's a class named `shapeless/$tilde$qmark$greater$λ.class`.
 ```
