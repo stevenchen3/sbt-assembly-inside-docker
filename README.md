@@ -47,7 +47,9 @@ Fully-qualified classname does not match jar entry:
 Omitting shapeless/$tilde$qmark$greater$?.class.
 ```
 
-Do `jar -tf shapeless_2.11.2.3.2.jar` against original `shapeless`, can't find any like `shapeless/$tilde$qmark$greater`
+Do `jar -tf shapeless_2.11.2.3.2.jar` against original `shapeless`, can't find any like
+`shapeless/$tilde$qmark$greater`. Look into the source codes of `jarjar` (a library that
+`sbt-assembly` relies on to repackage Jars), it turns out the error message thrown by `jarjar`.
 
 # How to fix?
 
