@@ -16,7 +16,7 @@ libraryDependencies ++= Seq(
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
 assemblyShadeRules in assembly := Seq(
-  ShadeRule.rename("shapeless.**" -> "shaded_shapless.@1")
+  ShadeRule.rename("shapeless.**" -> "shaded_shapeless.@1")
     .inLibrary("com.chuusai" % "shapeless_2.11" % "2.3.2")
     .inLibrary("io.circe" % "circe-generic_2.11" % circeVersion)
     .inLibrary("io.circe" % "circe-generic-extras_2.11" % circeVersion).inProject

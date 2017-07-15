@@ -53,9 +53,20 @@ Do `jar -tf shapeless_2.11.2.3.2.jar` against original `shapeless`, can't find a
 
 # How to fix?
 
+## File name too long issue
+
 There won't be a handy fix for this for now. (1) Assemble your Jars on bare metal machine; (2) If
 you really need to assemble your Jars inside containers, check out workarounds from
 [https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker](https://github.com/milessabin/shapeless/wiki/Shapeless-with-SBT-Assembly-inside-Docker)
+
+## Unicode support issue
+
+Do the following:
+
+```shell
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+```
 
 # Updates
 
@@ -65,3 +76,11 @@ and can touch files with name up to 255 characters.
 
 * Suspect there's some issue with `sbt-assembly` shading that causes it not working properly inside
 Docker container. But interestingly, it works on LXC container (e.g., CircleCI).
+
+* It turns out the `Fully-qualified classname does not match jar entry` error is caused by the
+default configuration is Docker not supporting `unicode`. Do the following will fix this issue:
+
+```shell
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+```
