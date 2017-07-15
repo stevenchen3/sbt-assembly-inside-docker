@@ -57,12 +57,21 @@ you really need to assemble your Jars inside containers, check out workarounds f
 
 ## Unicode support issue
 
-Do the following:
+The default `locale` is set to `POSIX` in CentOS base image. Do the following:
 
 ```shell
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 ```
+
+Or add the following to Dockerfile
+
+```shell
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+```
+
+See [here](https://github.com/CentOS/sig-cloud-instance-images/issues/71) for more details
 
 # Updates
 
