@@ -71,6 +71,7 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ```
 
+It seems that Docker doesn't pick up `/etc/locale.conf` correctly.
 See [here](https://github.com/CentOS/sig-cloud-instance-images/issues/71) for more details
 
 # Updates
