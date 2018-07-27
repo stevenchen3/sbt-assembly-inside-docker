@@ -57,7 +57,7 @@ you really need to assemble your Jars inside containers, check out workarounds f
 
 ## Unicode support issue
 
-The default `locale` is set to `POSIX` in CentOS base image. Do the following:
+The default `locale` is set to `POSIX` in CentOS base image. Do the following to fix:
 
 ```shell
 export LC_ALL="en_US.UTF-8"
@@ -72,19 +72,5 @@ ENV LANG en_US.UTF-8
 ```
 
 It seems that Docker doesn't pick up `/etc/locale.conf` correctly.
-See [here](https://github.com/CentOS/sig-cloud-instance-images/issues/71) for more details
-
-# Updates
-
-* Done several experiments and testing, found out that afaik, this is actually not caused by
-`filename too long` as inside Docker container we can observe output `255` with `getconf NAME_MAX /`
-and can touch files with name up to 255 characters.
-
-* Suspect there's some issue with `sbt-assembly` shading that causes it not working properly inside
-Docker container. But interestingly, it works on LXC container (e.g., CircleCI, the Unicode support,
-do `locale`, you will see the difference).
-
-* It turns out that the `Fully-qualified classname does not match jar entry` error is caused by the
-default image configuration (e.g., CentOS) in Docker not supporting `unicode`. In `shapeless`,
-there's a class named `shapeless/$tilde$qmark$greater$λ.class`.
-```
+See [here](https://github.com/CentOS/sig-cloud-instance-images/issues/71) for more details. And some
+classes in some Scala library include unicode in their class name.
